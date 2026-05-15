@@ -1,0 +1,952 @@
+:root {
+  --paper: #f6f0e3;
+  --paper-strong: #fffaf2;
+  --paper-shadow: rgba(31, 37, 39, 0.08);
+  --ink: #18252c;
+  --ink-soft: #52636c;
+  --line: rgba(24, 37, 44, 0.12);
+  --line-strong: rgba(24, 37, 44, 0.24);
+  --accent: #295566;
+  --accent-bright: #3b7185;
+  --accent-soft: #d7e4e8;
+  --ember: #b96a3a;
+  --ember-soft: #f4dcc9;
+  --moss: #dbe6d3;
+  --rose: #ead8d5;
+  --warning: #855330;
+  --danger: #9a433a;
+  --shadow-lg: 0 30px 80px rgba(24, 37, 44, 0.12);
+  --shadow-sm: 0 12px 28px rgba(24, 37, 44, 0.08);
+  --radius-xl: 28px;
+  --radius-lg: 22px;
+  --radius-md: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(185, 106, 58, 0.18), transparent 32%),
+    radial-gradient(circle at 100% 0%, rgba(41, 85, 102, 0.18), transparent 30%),
+    radial-gradient(circle at 50% 100%, rgba(219, 230, 211, 0.5), transparent 28%),
+    linear-gradient(180deg, #eee3cf 0%, #f6f0e3 34%, #f9f5ed 100%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.42;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.95), transparent 88%);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+  cursor: not-allowed;
+  opacity: 0.64;
+}
+
+.page-shell {
+  width: min(1480px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 1.8rem 0 3rem;
+}
+
+.context-bar {
+  display: grid;
+  gap: 0.8rem;
+  margin-bottom: 1.15rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid rgba(255, 255, 255, 0.64);
+  border-radius: 22px;
+  background: rgba(255, 250, 242, 0.78);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-sm);
+}
+
+.context-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.context-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid rgba(24, 37, 44, 0.12);
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--ink);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.context-pill-muted {
+  color: var(--ink-soft);
+}
+
+.context-pill-warning {
+  background: rgba(244, 220, 201, 0.9);
+  color: var(--warning);
+}
+
+.context-pill-success {
+  background: rgba(219, 230, 211, 0.9);
+  color: #3e5b2d;
+}
+
+.launch-notice {
+  margin: 0;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+.hero {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1.7fr) minmax(320px, 0.9fr);
+  margin-bottom: 1.5rem;
+}
+
+.hero-copy,
+.hero-panel,
+.card,
+.rail-card {
+  border: 1px solid rgba(255, 255, 255, 0.62);
+  border-radius: var(--radius-xl);
+  background: rgba(255, 250, 242, 0.82);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-lg);
+}
+
+.hero-copy {
+  padding: 2.3rem;
+}
+
+.hero-panel {
+  padding: 1.8rem;
+  color: var(--paper-strong);
+  background:
+    linear-gradient(140deg, rgba(24, 37, 44, 0.96), rgba(41, 85, 102, 0.9)),
+    #1f414f;
+}
+
+.eyebrow,
+.section-label,
+.hero-kicker,
+.metric-label,
+.pill {
+  margin: 0 0 0.45rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.76rem;
+}
+
+.eyebrow,
+.section-label,
+.metric-label {
+  color: var(--ember);
+}
+
+.hero h1,
+.card h2,
+.rail-card h2,
+.tab-panel h2 {
+  margin: 0;
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+}
+
+.hero h1 {
+  max-width: 14ch;
+  font-size: clamp(2.7rem, 4vw, 4.9rem);
+  line-height: 0.94;
+}
+
+.hero-text {
+  max-width: 58ch;
+  margin: 1rem 0 0;
+  color: rgba(24, 37, 44, 0.76);
+  font-size: 1.03rem;
+  line-height: 1.65;
+}
+
+.hero-list {
+  display: grid;
+  gap: 0.8rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hero-list li {
+  padding: 0.8rem 1rem;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.compact-list {
+  margin-top: 0.8rem;
+}
+
+.notice-card .compact-list li {
+  background: rgba(255, 255, 255, 0.58);
+  border-color: rgba(24, 37, 44, 0.08);
+  color: var(--ink);
+}
+
+.app-layout {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: minmax(290px, 340px) minmax(0, 1fr);
+  align-items: start;
+}
+
+.studio-rail {
+  position: sticky;
+  top: 1rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.rail-card,
+.card {
+  padding: 1.35rem;
+}
+
+.studio-main {
+  min-width: 0;
+}
+
+.tab-strip {
+  position: sticky;
+  top: 0.9rem;
+  z-index: 4;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  border-radius: 999px;
+  background: rgba(255, 250, 242, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-sm);
+}
+
+.tab-button,
+.primary-button,
+.ghost-button,
+.module-card,
+.mini-button,
+.direction-action {
+  border: none;
+  cursor: pointer;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease;
+}
+
+.tab-button {
+  padding: 0.82rem 1rem;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+
+.tab-button.is-active {
+  color: var(--paper-strong);
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  box-shadow: 0 18px 34px rgba(41, 85, 102, 0.24);
+}
+
+.is-hidden {
+  display: none !important;
+}
+
+.tab-panel {
+  display: none;
+  animation: rise 300ms ease both;
+}
+
+.tab-panel.is-active {
+  display: block;
+}
+
+.panel-grid,
+.workspace-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.panel-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.workspace-grid {
+  margin-top: 1rem;
+  grid-template-columns: minmax(0, 1.25fr) minmax(340px, 0.95fr);
+}
+
+.workspace-reflection {
+  grid-column: 1 / -1;
+}
+
+.section-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.section-heading.compact {
+  margin-bottom: 0.8rem;
+}
+
+.resource-heading {
+  margin-top: 1.4rem;
+}
+
+.section-heading h2 {
+  font-size: 1.78rem;
+}
+
+.field-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.field-grid-dashboard {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.field {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.field span {
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.field-span-2 {
+  grid-column: span 2;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  padding: 0.88rem 1rem;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.72);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+textarea {
+  resize: vertical;
+  line-height: 1.55;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: rgba(41, 85, 102, 0.45);
+  box-shadow: 0 0 0 4px rgba(41, 85, 102, 0.12);
+  transform: translateY(-1px);
+}
+
+.primary-button,
+.ghost-button,
+.mini-button,
+.direction-action {
+  border-radius: 999px;
+  font-weight: 700;
+}
+
+.primary-button {
+  padding: 0.82rem 1.15rem;
+  color: var(--paper-strong);
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  box-shadow: 0 16px 30px rgba(41, 85, 102, 0.22);
+}
+
+.ghost-button,
+.mini-button,
+.direction-action {
+  padding: 0.78rem 1rem;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid var(--line);
+}
+
+.primary-button:hover,
+.ghost-button:hover,
+.tab-button:hover,
+.module-card:hover,
+.mini-button:hover,
+.direction-action:hover {
+  transform: translateY(-1px);
+}
+
+.project-list,
+.memory-list,
+.bullet-stack,
+.direction-list,
+.flag-list,
+.world-bible-grid,
+.module-card-grid,
+.instructor-project-cards,
+.notice-grid,
+.reflection-grid,
+.snapshot-panel,
+.module-summary {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.project-item {
+  display: grid;
+  gap: 0.65rem;
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.project-item.is-active {
+  border-color: rgba(41, 85, 102, 0.32);
+  background:
+    linear-gradient(160deg, rgba(215, 228, 232, 0.8), rgba(255, 255, 255, 0.76));
+}
+
+.project-item-top,
+.mini-row,
+.metric-strip,
+.export-toolbar,
+.output-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.project-item-top {
+  justify-content: space-between;
+}
+
+.project-name {
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.project-meta {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: fit-content;
+  padding: 0.42rem 0.72rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+
+.pill-accent {
+  color: var(--accent);
+  background: rgba(215, 228, 232, 0.92);
+}
+
+.pill-warning {
+  color: var(--warning);
+  background: rgba(244, 220, 201, 0.96);
+}
+
+.pill-muted {
+  color: var(--ink-soft);
+  background: rgba(255, 255, 255, 0.8);
+  border-color: var(--line);
+}
+
+.snapshot-panel {
+  gap: 0.75rem;
+}
+
+.snapshot-card {
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--line);
+}
+
+.snapshot-card strong {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 1.2rem;
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(24, 37, 44, 0.08);
+}
+
+.progress-bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--ember), var(--accent-bright));
+}
+
+.memory-card,
+.bullet-item,
+.flag-item,
+.direction-card,
+.world-bible-card,
+.module-summary-card,
+.notice-card,
+.instructor-card {
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.58);
+}
+
+.memory-card,
+.bullet-item,
+.flag-item {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.memory-card p,
+.bullet-item p,
+.flag-item p,
+.direction-card p,
+.notice-card p,
+.world-bible-card p,
+.instructor-card p {
+  margin: 0;
+}
+
+.memory-card small,
+.direction-card small,
+.flag-item small,
+.world-bible-card small,
+.module-summary-card small,
+.instructor-card small {
+  color: var(--ink-soft);
+}
+
+.notice-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.notice-card {
+  min-height: 100%;
+}
+
+.notice-title {
+  margin: 0 0 0.5rem;
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+  font-size: 1.12rem;
+}
+
+.module-card-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.module-card {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.84), rgba(255, 255, 255, 0.55));
+  text-align: left;
+}
+
+.picker-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.picker-card {
+  min-height: 100%;
+}
+
+.picker-button {
+  margin-top: auto;
+  width: fit-content;
+}
+
+.module-card.is-active {
+  border-color: rgba(41, 85, 102, 0.38);
+  background:
+    linear-gradient(160deg, rgba(215, 228, 232, 0.9), rgba(255, 255, 255, 0.82));
+  box-shadow: 0 18px 36px rgba(41, 85, 102, 0.14);
+}
+
+.module-card.is-complete {
+  border-color: rgba(90, 120, 63, 0.3);
+}
+
+.module-card-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.module-card-week {
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}
+
+.module-card-title {
+  margin: 0;
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+  font-size: 1.18rem;
+}
+
+.module-card-focus {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.module-summary {
+  margin-bottom: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.module-summary-card {
+  padding: 1rem;
+}
+
+.module-summary-card strong {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 1.03rem;
+}
+
+.decision-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.8fr);
+  align-items: end;
+}
+
+.decision-actions {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.ai-panel {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.ai-block {
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(41, 85, 102, 0.12);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.7), rgba(247, 242, 231, 0.65));
+}
+
+.ai-title {
+  margin: 0 0 0.8rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.bullet-stack,
+.flag-list,
+.direction-list {
+  gap: 0.7rem;
+}
+
+.bullet-item {
+  position: relative;
+  padding-left: 1.1rem;
+}
+
+.bullet-item::before {
+  content: "";
+  position: absolute;
+  top: 1.05rem;
+  left: 0.1rem;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--accent-bright);
+}
+
+.flag-item.warning {
+  border-color: rgba(185, 106, 58, 0.28);
+  background: rgba(244, 220, 201, 0.56);
+}
+
+.flag-item.risk {
+  border-color: rgba(154, 67, 58, 0.28);
+  background: rgba(234, 216, 213, 0.56);
+}
+
+.direction-card {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.direction-card h3,
+.world-bible-card h3 {
+  margin: 0;
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+  font-size: 1.2rem;
+}
+
+.direction-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.direction-action {
+  padding: 0.58rem 0.82rem;
+  font-size: 0.88rem;
+}
+
+.decision-point {
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  background: rgba(215, 228, 232, 0.55);
+  line-height: 1.55;
+}
+
+.reflection-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.world-bible-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.world-bible-card {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.world-bible-list {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.world-bible-entry {
+  padding: 0.9rem;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px dashed rgba(24, 37, 44, 0.14);
+  line-height: 1.5;
+}
+
+.world-bible-empty,
+.empty-state {
+  padding: 1rem;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px dashed rgba(24, 37, 44, 0.16);
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+.export-meta {
+  margin-top: 1rem;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+.export-preview {
+  margin: 0;
+  min-height: 720px;
+  overflow: auto;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background: rgba(24, 37, 44, 0.96);
+  color: #f5eee0;
+  padding: 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+.instructor-summary {
+  display: grid;
+  gap: 0.9rem;
+  margin-bottom: 1rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.metric-card {
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--line);
+}
+
+.metric-card strong {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 1.55rem;
+  font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", serif;
+}
+
+.return-card {
+  max-width: 780px;
+  margin: 5rem auto 0;
+}
+
+.instructor-project-cards {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.instructor-card {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.instructor-card-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.status-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.muted {
+  color: var(--ink-soft);
+}
+
+.is-hidden {
+  display: none !important;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1280px) {
+  .module-card-grid,
+  .picker-grid,
+  .field-grid-dashboard,
+  .instructor-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .app-layout,
+  .workspace-grid,
+  .panel-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .studio-rail {
+    position: static;
+  }
+
+  .workspace-reflection {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 920px) {
+  .page-shell {
+    width: min(100%, calc(100% - 1rem));
+    padding-top: 1rem;
+  }
+
+  .hero,
+  .module-summary,
+  .world-bible-grid,
+  .notice-grid,
+  .instructor-project-cards,
+  .reflection-grid,
+  .field-grid,
+  .field-grid-dashboard,
+  .picker-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .decision-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tab-strip {
+    position: static;
+    border-radius: 26px;
+  }
+}

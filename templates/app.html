@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LIBA 230 Worldbuilding Studio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <section class="context-bar">
+        <div class="context-pills" aria-live="polite">
+          <span id="currentUserBadge" class="context-pill">Waiting for launch</span>
+          <span id="currentCourseBadge" class="context-pill">No course context yet</span>
+          <span id="accessModeBadge" class="context-pill context-pill-muted">Access mode unknown</span>
+          <span id="syncStatusBadge" class="context-pill context-pill-muted">Not synced</span>
+        </div>
+        <p id="launchNotice" class="launch-notice">
+          Launch the studio from Canvas or use a demo login while configuring LTI.
+        </p>
+      </section>
+
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">LIBA 230: Worldbuilding</p>
+          <h1>Build stronger fictional worlds without outsourcing authorship.</h1>
+          <p class="hero-text">
+            This studio acts as a scaffold for inquiry, revision, and documentation.
+            It asks better questions, checks coherence, tracks decisions, and helps
+            students move from world to story one module at a time.
+          </p>
+        </div>
+
+        <div class="hero-panel">
+          <p class="hero-kicker">Prototype focus</p>
+          <ul class="hero-list">
+            <li>Guided weekly module workspace</li>
+            <li>Adaptive questioning instead of finished outputs</li>
+            <li>World Bible building with project memory</li>
+            <li>Instructor review without automated grading</li>
+          </ul>
+        </div>
+      </header>
+
+      <div class="app-layout">
+        <aside class="studio-rail">
+          <section class="rail-card">
+            <div class="section-heading compact">
+              <div>
+                <p class="section-label">Projects</p>
+                <h2>Studio Archive</h2>
+              </div>
+              <button id="createProjectButton" class="primary-button" type="button">
+                New project
+              </button>
+            </div>
+            <div id="projectList" class="project-list" aria-live="polite"></div>
+          </section>
+
+          <section class="rail-card">
+            <p class="section-label">At A Glance</p>
+            <div id="projectSnapshot" class="snapshot-panel"></div>
+          </section>
+
+          <section class="rail-card">
+            <div class="section-heading compact">
+              <div>
+                <p class="section-label">Project Memory</p>
+                <h2>Saved Decisions</h2>
+              </div>
+            </div>
+            <div id="savedIdeasList" class="memory-list"></div>
+          </section>
+
+          <section class="rail-card">
+            <div class="section-heading compact">
+              <div>
+                <p class="section-label">Watch List</p>
+                <h2>Rejected And Unresolved</h2>
+              </div>
+            </div>
+            <div id="watchList" class="memory-list"></div>
+          </section>
+        </aside>
+
+        <main class="studio-main">
+          <nav class="tab-strip" aria-label="Studio sections">
+            <button class="tab-button is-active" data-tab="dashboard" type="button">
+              Project Dashboard
+            </button>
+            <button class="tab-button" data-tab="modules" type="button">
+              Weekly Module Workspace
+            </button>
+            <button class="tab-button" data-tab="worldBible" type="button">
+              World Bible Builder
+            </button>
+            <button class="tab-button" data-tab="exports" type="button">
+              Export Studio
+            </button>
+            <button class="tab-button" data-tab="instructor" type="button">
+              Instructor Dashboard
+            </button>
+          </nav>
+
+          <section id="tab-dashboard" class="tab-panel is-active">
+            <div class="panel-grid">
+              <section class="card">
+                <div class="section-heading">
+                  <div>
+                    <p class="section-label">Setup</p>
+                    <h2>Project Dashboard</h2>
+                  </div>
+                  <button id="duplicateProjectButton" class="ghost-button" type="button">
+                    Duplicate
+                  </button>
+                </div>
+
+                <div class="field-grid field-grid-dashboard">
+                  <label class="field">
+                    <span>Student name or pseudonym</span>
+                    <input id="studentName" type="text" placeholder="Ari, S., or pseudonym" />
+                  </label>
+
+                  <label class="field">
+                    <span>World title</span>
+                    <input id="worldTitle" type="text" placeholder="The Salt Orchard" />
+                  </label>
+
+                  <label class="field">
+                    <span>Genre</span>
+                    <input id="genre" type="text" placeholder="Speculative fiction" />
+                  </label>
+
+                  <label class="field">
+                    <span>Medium</span>
+                    <input id="medium" type="text" placeholder="Short story, game, comic" />
+                  </label>
+
+                  <label class="field field-span-2">
+                    <span>Core concept</span>
+                    <textarea
+                      id="coreConcept"
+                      rows="4"
+                      placeholder="Describe the rough world idea, its central tension, and why it matters to you."
+                    ></textarea>
+                  </label>
+
+                  <label class="field">
+                    <span>Tone / mood</span>
+                    <input
+                      id="tone"
+                      type="text"
+                      placeholder="Tender, uncanny, satirical, ceremonial"
+                    />
+                  </label>
+
+                  <label class="field">
+                    <span>Visual style</span>
+                    <input
+                      id="visualStyle"
+                      type="text"
+                      placeholder="Weathered maps, luminous biotech, shrine architecture"
+                    />
+                  </label>
+
+                  <label class="field">
+                    <span>Central themes</span>
+                    <textarea
+                      id="themes"
+                      rows="3"
+                      placeholder="Comma-separated themes such as memory, migration, inheritance, repair."
+                    ></textarea>
+                  </label>
+
+                  <label class="field">
+                    <span>Visual references</span>
+                    <textarea
+                      id="visualReferences"
+                      rows="3"
+                      placeholder="Artists, films, landscapes, textures, or visual motifs."
+                    ></textarea>
+                  </label>
+
+                  <label class="field">
+                    <span>Intended final output</span>
+                    <input
+                      id="intendedFinalOutput"
+                      type="text"
+                      placeholder="Story bible, short story, pitch deck, animation brief"
+                    />
+                  </label>
+
+                  <label class="field">
+                    <span>Current module</span>
+                    <select id="currentModuleSelect"></select>
+                  </label>
+
+                  <label class="field">
+                    <span>Story structure path</span>
+                    <select id="storyStructureChoice">
+                      <option value="undecided">Undecided</option>
+                      <option value="three-act">Three-act structure</option>
+                      <option value="four-act">Four-act / Ki-Shō-Ten-Ketsu</option>
+                      <option value="hybrid">Hybrid or nonlinear</option>
+                    </select>
+                  </label>
+
+                  <label class="field field-span-2">
+                    <span>AI collaboration plan / acknowledgment</span>
+                    <textarea
+                      id="aiCollaborationNote"
+                      rows="4"
+                      placeholder="Note how AI is helping, where your judgment takes over, and how you will acknowledge that collaboration in the final project."
+                    ></textarea>
+                  </label>
+
+                  <label class="field field-span-2">
+                    <span>Safety, canon, or collaboration notes</span>
+                    <textarea
+                      id="safetyCanonNote"
+                      rows="4"
+                      placeholder="Use this for Lines and Veils, visitor safety considerations, canon ownership, or group working agreements."
+                    ></textarea>
+                  </label>
+                </div>
+              </section>
+
+              <section class="card">
+                <div class="section-heading">
+                  <div>
+                    <p class="section-label">Guidance</p>
+                    <h2>Course Commitments</h2>
+                  </div>
+                </div>
+
+                <div class="notice-grid">
+                  <article class="notice-card">
+                    <p class="notice-title">Privacy notice</p>
+                    <p>
+                      Store only project-relevant material. Students may use first names or
+                      pseudonyms, and this version stores work only inside the course-linked studio.
+                    </p>
+                  </article>
+
+                  <article class="notice-card">
+                    <p class="notice-title">Academic integrity</p>
+                    <p>
+                      AI suggestions are prompts for judgment, not final submissions. Students
+                      must revise, select, explain, and own the work they turn in.
+                    </p>
+                  </article>
+
+                  <article class="notice-card">
+                    <p class="notice-title">Pedagogical stance</p>
+                    <p>
+                      The studio is designed to lower cognitive load while increasing ethical
+                      reflection, coherence, and documentation of process.
+                    </p>
+                  </article>
+
+                  <article class="notice-card">
+                    <p class="notice-title">Instructor review</p>
+                    <p>
+                      Progress, unresolved questions, and AI-use reflections are visible in the
+                      instructor dashboard, but the tool does not assign grades.
+                    </p>
+                  </article>
+                </div>
+
+                <div class="section-heading compact resource-heading">
+                  <div>
+                    <p class="section-label">Course Scaffolds</p>
+                    <h2>Built From The Canvas Course</h2>
+                  </div>
+                </div>
+                <div id="resourceScaffolds" class="notice-grid"></div>
+              </section>
+            </div>
+          </section>
+
+          <section id="tab-modules" class="tab-panel">
+            <section class="card">
+              <div class="section-heading">
+                <div>
+                  <p class="section-label">Course Sequence</p>
+                  <h2>Weekly Module Selector</h2>
+                </div>
+              </div>
+              <div id="moduleCardGrid" class="module-card-grid" aria-live="polite"></div>
+            </section>
+
+            <div class="workspace-grid">
+              <section class="card workspace-main">
+                <div class="section-heading">
+                  <div>
+                    <p class="section-label">Workspace</p>
+                    <h2 id="workspaceTitle">Module Workspace</h2>
+                  </div>
+                  <button id="generateGuidanceButton" class="primary-button" type="button">
+                    Generate guidance
+                  </button>
+                </div>
+
+                <div id="moduleSummary" class="module-summary"></div>
+
+                <label class="field">
+                  <span>Student input</span>
+                  <textarea
+                    id="moduleStudentInput"
+                    rows="7"
+                    placeholder="Draft your current worldbuilding idea for this module in your own words."
+                  ></textarea>
+                </label>
+
+                <label class="field">
+                  <span>Student response notes</span>
+                  <textarea
+                    id="moduleStudentResponses"
+                    rows="7"
+                    placeholder="Answer questions, jot possibilities, note research, or sketch contradictions here."
+                  ></textarea>
+                </label>
+
+                <div class="decision-grid">
+                  <label class="field">
+                    <span>Student decision panel</span>
+                    <textarea
+                      id="studentDecision"
+                      rows="5"
+                      placeholder="Write the choice you want to keep, revise, reject, or test next."
+                    ></textarea>
+                  </label>
+
+                  <div class="decision-actions">
+                    <button id="saveDecisionButton" class="primary-button" type="button">
+                      Save approved choice
+                    </button>
+                    <button id="rejectDecisionButton" class="ghost-button" type="button">
+                      Reject idea
+                    </button>
+                    <button id="markUnresolvedButton" class="ghost-button" type="button">
+                      Mark unresolved
+                    </button>
+                    <button id="saveModuleToBibleButton" class="primary-button" type="button">
+                      Save to World Bible
+                    </button>
+                  </div>
+                </div>
+              </section>
+
+              <section class="card workspace-side">
+                <div class="section-heading compact">
+                  <div>
+                    <p class="section-label">AI Collaborator</p>
+                    <h2>Guidance Panel</h2>
+                  </div>
+                </div>
+
+                <div class="ai-panel">
+                  <article class="ai-block">
+                    <p class="ai-title">What is already working</p>
+                    <div id="workingList" class="bullet-stack"></div>
+                  </article>
+
+                  <article class="ai-block">
+                    <p class="ai-title">What needs clarification</p>
+                    <div id="clarificationList" class="bullet-stack"></div>
+                  </article>
+
+                  <article class="ai-block">
+                    <p class="ai-title">Questions to answer next</p>
+                    <div id="questionsList" class="bullet-stack"></div>
+                  </article>
+
+                  <article class="ai-block">
+                    <p class="ai-title">Possible directions</p>
+                    <div id="directionsList" class="direction-list"></div>
+                  </article>
+
+                  <article class="ai-block">
+                    <p class="ai-title">Coherence risks</p>
+                    <div id="coherenceList" class="flag-list"></div>
+                  </article>
+
+                  <article class="ai-block">
+                    <p class="ai-title">Student decision point</p>
+                    <div id="decisionPoint" class="decision-point"></div>
+                  </article>
+                </div>
+              </section>
+
+              <section class="card workspace-reflection">
+                <div class="section-heading compact">
+                  <div>
+                    <p class="section-label">Reflection</p>
+                    <h2>Process Notes</h2>
+                  </div>
+                  <button id="saveReflectionButton" class="ghost-button" type="button">
+                    Save reflection
+                  </button>
+                </div>
+
+                <div class="reflection-grid">
+                  <label class="field">
+                    <span>What did I decide?</span>
+                    <textarea id="reflectionDecided" rows="3"></textarea>
+                  </label>
+
+                  <label class="field">
+                    <span>What did I reject?</span>
+                    <textarea id="reflectionRejected" rows="3"></textarea>
+                  </label>
+
+                  <label class="field">
+                    <span>What did AI suggest that I changed?</span>
+                    <textarea id="reflectionAiChange" rows="3"></textarea>
+                  </label>
+
+                  <label class="field">
+                    <span>What is still unresolved?</span>
+                    <textarea id="reflectionUnresolved" rows="3"></textarea>
+                  </label>
+
+                  <label class="field">
+                    <span>How does this connect to my larger world?</span>
+                    <textarea id="reflectionConnection" rows="3"></textarea>
+                  </label>
+
+                  <label class="field">
+                    <span>What research do I still need?</span>
+                    <textarea id="reflectionResearch" rows="3"></textarea>
+                  </label>
+                </div>
+              </section>
+            </div>
+          </section>
+
+          <section id="tab-worldBible" class="tab-panel">
+            <section class="card">
+              <div class="section-heading">
+                <div>
+                  <p class="section-label">Archive</p>
+                  <h2>World Bible Builder</h2>
+                </div>
+              </div>
+              <div id="worldBibleGrid" class="world-bible-grid"></div>
+            </section>
+          </section>
+
+          <section id="tab-exports" class="tab-panel">
+            <div class="panel-grid">
+              <section class="card">
+                <div class="section-heading">
+                  <div>
+                    <p class="section-label">Export</p>
+                    <h2>Portfolio Exports</h2>
+                  </div>
+                </div>
+
+                <div class="field-grid export-toolbar">
+                  <label class="field">
+                    <span>Export type</span>
+                    <select id="exportTypeSelect"></select>
+                  </label>
+
+                  <label class="field">
+                    <span>File name</span>
+                    <input id="exportFileName" type="text" placeholder="world-bible.md" />
+                  </label>
+                </div>
+
+                <div class="output-actions">
+                  <button id="refreshExportButton" class="primary-button" type="button">
+                    Refresh preview
+                  </button>
+                  <button id="downloadExportButton" class="ghost-button" type="button">
+                    Download Markdown
+                  </button>
+                  <button id="downloadJsonButton" class="ghost-button" type="button">
+                    Download Project JSON
+                  </button>
+                  <button id="copyExportButton" class="ghost-button" type="button">
+                    Copy preview
+                  </button>
+                </div>
+
+                <div class="export-meta">
+                  <p>
+                    These exports compile saved student-authored decisions, reflection, and
+                    unresolved questions. They are intentionally editable and should be revised
+                    before submission or sharing.
+                  </p>
+                </div>
+              </section>
+
+              <section class="card">
+                <div class="section-heading compact">
+                  <div>
+                    <p class="section-label">Preview</p>
+                    <h2>Export Draft</h2>
+                  </div>
+                </div>
+                <pre id="exportPreview" class="export-preview"></pre>
+              </section>
+            </div>
+          </section>
+
+          <section id="tab-instructor" class="tab-panel">
+            <section class="card">
+              <div class="section-heading">
+                <div>
+                  <p class="section-label">Instructor View</p>
+                  <h2>Project Progress Dashboard</h2>
+                </div>
+              </div>
+
+              <div id="instructorSummary" class="instructor-summary"></div>
+              <div id="instructorProjectCards" class="instructor-project-cards"></div>
+            </section>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      window.__APP_BOOTSTRAP__ = {{ bootstrap|tojson if bootstrap else "null" }};
+    </script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Choose A Canvas Launch</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <section class="context-bar">
+        <div class="context-pills">
+          <span class="context-pill">{{ deep_link.displayName }}</span>
+          <span class="context-pill">{{ deep_link.courseTitle }}</span>
+          <span class="context-pill context-pill-muted">{{ deep_link.placement }}</span>
+        </div>
+        <p class="launch-notice">
+          Pick the studio entry you want Canvas to create. This returns one tool link at a time.
+        </p>
+      </section>
+
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Canvas Deep Linking</p>
+          <h1>Choose what this Canvas link should open.</h1>
+          <p class="hero-text">
+            Use a week-specific launch when students should arrive directly in the matching
+            module workspace. Use the full studio when you want them to enter the broader
+            project environment.
+          </p>
+        </div>
+
+        <div class="hero-panel">
+          <p class="hero-kicker">What Canvas will get</p>
+          <ul class="hero-list">
+            <li>One LTI link tied to the course context</li>
+            <li>Optional direct launch into a weekly workspace</li>
+            <li>No grading automation or auto-authored content</li>
+          </ul>
+        </div>
+      </header>
+
+      <section class="card">
+        <div class="section-heading">
+          <div>
+            <p class="section-label">Selection</p>
+            <h2>Launch Options</h2>
+          </div>
+        </div>
+
+        <div class="module-card-grid picker-grid">
+          <form class="module-card picker-card" method="POST" action="{{ url_for('deep_link_respond') }}">
+            <input type="hidden" name="token" value="{{ deep_link.token }}" />
+            <input type="hidden" name="module_id" value="" />
+            <div class="module-card-header">
+              <span class="module-card-week">Course Home</span>
+              <span class="pill pill-muted">Full studio</span>
+            </div>
+            <h3 class="module-card-title">Worldbuilding Studio</h3>
+            <p class="module-card-focus">
+              Open the main project dashboard, exports, instructor view, and full module sequence.
+            </p>
+            <button class="primary-button picker-button" type="submit">Use this link</button>
+          </form>
+
+          {% for module in modules %}
+          <form class="module-card picker-card" method="POST" action="{{ url_for('deep_link_respond') }}">
+            <input type="hidden" name="token" value="{{ deep_link.token }}" />
+            <input type="hidden" name="module_id" value="{{ module.id }}" />
+            <div class="module-card-header">
+              <span class="module-card-week">{{ module.week }}</span>
+              <span class="pill pill-accent">{{ module.output }}</span>
+            </div>
+            <h3 class="module-card-title">{{ module.title }}</h3>
+            <p class="module-card-focus">{{ module.description }}</p>
+            <button class="primary-button picker-button" type="submit">Launch this module</button>
+          </form>
+          {% endfor %}
+        </div>
+      </section>
+    </div>
+  </body>
+</html>

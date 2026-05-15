@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Returning To Canvas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <section class="card return-card">
+        <div class="section-heading">
+          <div>
+            <p class="section-label">Canvas Return</p>
+            <h2>Sending your selection back to Canvas</h2>
+          </div>
+        </div>
+
+        <p class="hero-text">
+          The tool is returning <strong>{{ item_title }}</strong> to Canvas for the
+          <strong>{{ placement }}</strong> placement.
+        </p>
+
+        <form id="deepLinkReturnForm" method="POST" action="{{ return_url }}">
+          <input type="hidden" name="JWT" value="{{ jwt_response }}" />
+          <noscript>
+            <button class="primary-button" type="submit">Return to Canvas</button>
+          </noscript>
+        </form>
+
+        <p class="launch-notice">
+          If Canvas does not continue automatically, use the button above to complete the handoff.
+        </p>
+      </section>
+    </div>
+
+    <script>
+      window.setTimeout(() => {
+        const form = document.getElementById("deepLinkReturnForm");
+        if (form) {
+          form.submit();
+        }
+      }, 120);
+    </script>
+  </body>
+</html>
